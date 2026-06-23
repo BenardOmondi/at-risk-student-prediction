@@ -1,0 +1,15 @@
+# Environments
+venv/
+env/
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Datasets and Models (Optional: only ignore if files are >50MB)
+# data/*.csv
+# models/*.pkl

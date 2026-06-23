@@ -1,0 +1,393 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Student Risk Prediction{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>🎓 Student Risk Prediction System</h1>
+        <p class="hero-subtitle">Early Detection of At-Risk Students</p>
+        <p class="hero-description">
+            Identify students who may need academic intervention before they fall behind. 
+        </p>
+        
+        <div class="cta-buttons">
+            <a href="/predict" class="btn btn-primary btn-large">
+                 Predict Single Student
+            </a>
+            <a href="/batch" class="btn btn-secondary btn-large">
+                📤 Batch Upload
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="features-section">
+    <h2>How It Works</h2>
+    
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <h3>Enter Student Data</h3>
+            <p>Input student academic performance, demographics, and study habits through an easy-to-use form.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Analysis</h3>
+            <p>The model analyzes the features to predict student risk with high accuracy.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Get Results</h3>
+            <p>Receive instant predictions with probability scores and actionable recommendations.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Batch Processing</h3>
+            <p>Upload CSV files to analyze multiple students at once for efficient class-wide assessment.</p>
+        </div>
+    </div>
+</div>
+
+<div class="info-section">
+    <h2>Why Early Detection Matters</h2>
+    
+    <div class="info-content">
+        <div class="info-text">
+            <p>
+                <strong>Early intervention is key to student success.</strong> 
+                By identifying at-risk students early in the semester, educators can:
+            </p>
+            <ul class="benefits-list">
+                <li>Provide timely academic support and tutoring.</li>
+                <li>Schedule preventive meetings with students and parents.</li>
+                <li>Create personalized learning plans.</li>
+                <li>Allocate resources more effectively.</li>
+                <li>Reduce dropout rates and improve outcomes.</li>
+                <li>Track progress and adjust interventions as needed.</li>
+            </ul>
+            <p>
+                This system uses data-driven insights to help educators make informed decisions 
+                about where to focus their intervention efforts for maximum impact.
+            </p>
+        </div>
+        
+    </div>
+</div>
+
+<div class="cta-section">
+    <h2>Ready to Get Started?</h2>
+    <p>Choose how you want to use the system:</p>
+    
+    <div class="cta-cards">
+        <div class="cta-card">
+            <h3>Single Student</h3>
+            <p>Predict risk level for one student at a time with detailed feedback.</p>
+            <a href="/predict" class="btn btn-primary">Start Prediction →</a>
+        </div>
+        
+        <div class="cta-card">
+            <h3>Multiple Students</h3>
+            <p>Upload a CSV file to analyze an entire class or cohort at once.</p>
+            <a href="/batch" class="btn btn-primary">Upload File →</a>
+        </div>
+        
+        <div class="cta-card">
+            <h3>Learn More</h3>
+            <p>Understand how the model works and what features it considers.</p>
+            <a href="/about" class="btn btn-secondary">About the Model →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    margin: -2rem -1rem 3rem -1rem;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    opacity: 0.95;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* Features Section */
+.features-section {
+    margin: 4rem 0;
+}
+
+.features-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--gray-900);
+}
+
+.feature-card p {
+    color: var(--gray-700);
+    line-height: 1.6;
+}
+
+/* Stats Section */
+.stats-section {
+    background: var(--gray-100);
+    padding: 3rem 0;
+    margin: 4rem -1rem;
+}
+
+.stats-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.stat-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.stat-description {
+    font-size: 0.9rem;
+    color: var(--gray-700);
+}
+
+/* Info Section */
+.info-section {
+    margin: 4rem 0;
+}
+
+.info-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.info-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.info-text p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.benefits-list {
+    margin: 1.5rem 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.benefits-list li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.info-highlight {
+    background: var(--gray-100);
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
+
+.info-highlight h3 {
+    margin-bottom: 1rem;
+    color: var(--gray-900);
+}
+
+.info-highlight ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-highlight ul li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.info-highlight ul li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* CTA Section */
+.cta-section {
+    margin: 4rem 0;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.cta-section > p {
+    color: var(--gray-700);
+    margin-bottom: 2rem;
+}
+
+.cta-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.cta-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.cta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.cta-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--gray-900);
+}
+
+.cta-card p {
+    color: var(--gray-700);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .btn-large {
+        width: 100%;
+    }
+    
+    .info-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+
+
+{% endblock %}

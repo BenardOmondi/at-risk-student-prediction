@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block title %}Batch Prediction Results{% endblock %}
+
+{% block content %}
+<div class="batch-results-container">
+    <h1>Batch Prediction Results</h1>
+    
+    <!-- Summary Stats -->
+    <div class="summary-stats">
+        <div class="stat-card total">
+            <h3>Total Students</h3>
+            <p class="stat-value">{{ total }}</p>
+        </div>
+        <div class="stat-card at-risk">
+            <h3>At-Risk</h3>
+            <p class="stat-value">{{ at_risk }}</p>
+        </div>
+        <div class="stat-card safe">
+            <h3>Safe</h3>
+            <p class="stat-value">{{ safe }}</p>
+        </div>
+    </div>
+    
+    <!-- Results Table -->
+    <div class="results-table-container">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Prediction</th>
+                    <th>Risk Probability</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr class="{% if result.prediction == 'At-Risk' %}risk-row{% else %}safe-row{% endif %}">
+                    <td>{{ result.index }}</td>
+                    <td>{{ result.student_id }}</td>
+                    <td>{{ result.name }}</td>
+                    <td>
+                        <span class="prediction-badge {% if result.prediction == 'At-Risk' %}badge-risk{% else %}badge-safe{% endif %}">
+                            {% if result.prediction == 'At-Risk' %}
+                                ⚠️ At-Risk
+                            {% else %}
+                                ✅ Safe
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="risk-bar">
+                            <div class="risk-fill" style="width: {{ result.risk }}%"></div>
+                        </div>
+                        <span class="risk-percentage">{{ "%.1f"|format(result.risk) }}%</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Actions -->
+    <div class="batch-actions">
+        <a href="/batch" class="btn btn-secondary">← Upload Another File</a>
+        <a href="/" class="btn btn-primary">🏠 Home</a>
+        <button onclick="window.print()" class="btn btn-primary">🖨️ Print Report</button>
+    </div>
+</div>
+
+<style>
+.batch-results-container {
+    margin: 30px 0;
+}
+
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.stat-card {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    background: #f8f9fa;
+    border-left: 5px solid #007bff;
+}
+
+.stat-card.total {
+    border-left-color: #007bff;
+}
+
+.stat-card.at-risk {
+    border-left-color: #dc3545;
+}
+
+.stat-card.safe {
+    border-left-color: #28a745;
+}
+
+.stat-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.results-table-container {
+    margin: 30px 0;
+    overflow-x: auto;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.results-table thead {
+    background: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.results-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.results-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 14px;
+}
+
+.results-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.results-table tbody tr.risk-row {
+    border-left: 3px solid #dc3545;
+}
+
+.results-table tbody tr.safe-row {
+    border-left: 3px solid #28a745;
+}
+
+.prediction-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.badge-risk {
+    background: #ffe5e5;
+    color: #dc3545;
+}
+
+.badge-safe {
+    background: #e5f7e5;
+    color: #28a745;
+}
+
+.risk-bar {
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.risk-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #dc3545);
+    border-radius: 3px;
+}
+
+.risk-percentage {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.batch-actions {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0;
+    justify-content: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+}
+
+@media print {
+    .batch-actions {
+        display: none;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,602 @@
+{% extends "base.html" %}
+
+{% block title %}About - Student Risk Prediction System{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <!-- Header Section -->
+    <section class="about-header">
+        <h1>About the Student Risk Prediction System</h1>
+        <p class="subtitle">Empowering Educators with Data-Driven Insights</p>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="about-section">
+        <h2>🎯 System Overview</h2>
+        <p>
+            The Student Risk Prediction System is a machine learning-powered tool designed to help educators 
+            identify students who may be at risk of academic failure. By analyzing various academic and personal 
+            factors, the system provides early warning indicators that enable timely intervention and support.
+        </p>
+        <p>
+            This proactive approach allows teachers and administrators to:
+        </p>
+        <ul>
+            <li>Identify struggling students before critical performance issues develop</li>
+            <li>Allocate resources and support to students who need it most</li>
+            <li>Monitor progress and adjust interventions based on data</li>
+            <li>Improve overall student outcomes and graduation rates</li>
+        </ul>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="about-section">
+        <h2>🔍 How It Works</h2>
+        <p>
+            The system uses a machine learning model trained on historical student data to predict academic risk. 
+            The model analyzes key factors that influence student success:
+        </p>
+        
+        <div class="factors-grid">
+            <div class="factor-card">
+                <h3>Academic Performance</h3>
+                <p>First and second period grades provide direct insight into current academic standing</p>
+            </div>
+            <div class="factor-card">
+                <h3>Past Failures</h3>
+                <p>History of course failures indicates students who may struggle with course material</p>
+            </div>
+            <div class="factor-card">
+                <h3>Attendance</h3>
+                <p>Number of absences correlates with engagement and course completion</p>
+            </div>
+            <div class="factor-card">
+                <h3>Study Time</h3>
+                <p>Weekly study hours reflect student commitment and academic engagement</p>
+            </div>
+            <div class="factor-card">
+                <h3>Family Support</h3>
+                <p>Family involvement and support significantly impacts academic success</p>
+            </div>
+            <div class="factor-card">
+                <h3>Technical Access</h3>
+                <p>Internet access and school support services enable effective learning</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="about-section">
+        <h2>✨ Key Features</h2>
+        <div class="features-list">
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <div class="feature-content">
+                    <h3>Individual Predictions</h3>
+                    <p>Get detailed risk assessments for single students with specific risk factors and recommendations</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📁</div>
+                <div class="feature-content">
+                    <h3>Batch Processing</h3>
+                    <p>Upload CSV files to process multiple students at once and get comprehensive summary reports</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📈</div>
+                <div class="feature-content">
+                    <h3>Risk Probability Scores</h3>
+                    <p>Understand the confidence level of each prediction with percentage-based risk indicators</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💡</div>
+                <div class="feature-content">
+                    <h3>Actionable Insights</h3>
+                    <p>Receive specific recommendations for intervention based on identified risk factors</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🖨️</div>
+                <div class="feature-content">
+                    <h3>Printable Reports</h3>
+                    <p>Generate professional reports for documentation and sharing with stakeholders</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-content">
+                    <h3>Real-Time Processing</h3>
+                    <p>Get instant predictions without delays for quick decision-making</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Requirements Section -->
+    <section class="about-section">
+        <h2>📋 Required Student Information</h2>
+        <p>To generate predictions, the system requires the following information about each student:</p>
+        
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Age</strong></td>
+                    <td>Student's current age</td>
+                    <td>Number (15-20)</td>
+                </tr>
+                <tr>
+                    <td><strong>Mother's Education (Medu)</strong></td>
+                    <td>Highest level of mother's education (0-4 scale)</td>
+                    <td>Number (0-4)</td>
+                </tr>
+                <tr>
+                    <td><strong>Father's Education (Fedu)</strong></td>
+                    <td>Highest level of father's education (0-4 scale)</td>
+                    <td>Number (0-4)</td>
+                </tr>
+                <tr>
+                    <td><strong>Study Time</strong></td>
+                    <td>Weekly study hours outside class (1-4 scale)</td>
+                    <td>Number (1-4)</td>
+                </tr>
+                <tr>
+                    <td><strong>Past Failures</strong></td>
+                    <td>Number of course failures before current semester</td>
+                    <td>Number (0+)</td>
+                </tr>
+                <tr>
+                    <td><strong>Absences</strong></td>
+                    <td>Total number of absences during semester</td>
+                    <td>Number (0+)</td>
+                </tr>
+                <tr>
+                    <td><strong>G1</strong></td>
+                    <td>First period grade (0-20 scale)</td>
+                    <td>Number (0-20)</td>
+                </tr>
+                <tr>
+                    <td><strong>G2</strong></td>
+                    <td>Second period grade (0-20 scale)</td>
+                    <td>Number (0-20)</td>
+                </tr>
+                <tr>
+                    <td><strong>Sex</strong></td>
+                    <td>Student's gender</td>
+                    <td>M/F</td>
+                </tr>
+                <tr>
+                    <td><strong>Address</strong></td>
+                    <td>Home address type (U=Urban, R=Rural)</td>
+                    <td>U/R</td>
+                </tr>
+                <tr>
+                    <td><strong>School Support</strong></td>
+                    <td>Receives extra educational support</td>
+                    <td>yes/no</td>
+                </tr>
+                <tr>
+                    <td><strong>Family Support</strong></td>
+                    <td>Receives family support</td>
+                    <td>yes/no</td>
+                </tr>
+                <tr>
+                    <td><strong>Internet Access</strong></td>
+                    <td>Has internet access at home</td>
+                    <td>yes/no</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="about-section">
+        <h2>🚀 How to Use</h2>
+        
+        <div class="usage-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Choose Your Method</h3>
+                    <p>
+                        <strong>Individual Prediction:</strong> Use the "Predict" page to enter a single student's information<br>
+                        <strong>Batch Upload:</strong> Use the "Batch Upload" page to process multiple students via CSV file
+                    </p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Enter or Upload Data</h3>
+                    <p>
+                        Fill in the required student information accurately. For batch uploads, ensure your CSV file 
+                        has all required columns with proper formatting.
+                    </p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Review Results</h3>
+                    <p>
+                        The system generates predictions showing risk level, probability scores, and specific risk factors 
+                        affecting each student's outcome.
+                    </p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Take Action</h3>
+                    <p>
+                        Use the recommendations provided to plan interventions and support. Print reports for documentation 
+                        and sharing with relevant stakeholders.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Information Section -->
+    <section class="about-section">
+        <h2>🤖 About the Model</h2>
+        <p>
+            The prediction model was trained on comprehensive student data, analyzing the patterns and factors that 
+            distinguish at-risk students from those on track for success.
+        </p>
+        <div class="model-info">
+            <div class="info-box">
+                <h3>Model Type</h3>
+                <p>Machine Learning Classification Model</p>
+            </div>
+            <div class="info-box">
+                <h3>Accuracy</h3>
+                <p>High-precision predictions based on historical data patterns</p>
+            </div>
+            <div class="info-box">
+                <h3>Data Source</h3>
+                <p>Trained on comprehensive student performance datasets</p>
+            </div>
+            <div class="info-box">
+                <h3>Continuous Improvement</h3>
+                <p>Model updated regularly with new data and feedback</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Notes Section -->
+    <section class="about-section warning-section">
+        <h2>⚠️ Important Notes</h2>
+        <ul>
+            <li><strong>Prediction Support Tool:</strong> This system is designed to support educator decision-making, 
+                not replace professional judgment</li>
+            <li><strong>Context Matters:</strong> Consider individual circumstances and qualitative factors alongside predictions</li>
+            <li><strong>Privacy & Data:</strong> All student data is handled securely and should comply with FERPA regulations</li>
+            <li><strong>Regular Updates:</strong> Re-assess students regularly as circumstances and performance change</li>
+            <li><strong>Holistic Approach:</strong> Use this tool as part of a comprehensive student support strategy</li>
+        </ul>
+    </section>
+
+    <!-- Support Section -->
+    <section class="about-section">
+        <h2>📞 Support & Resources</h2>
+        <p>
+            For questions about using this system or interpreting results, please consult with your school's data team 
+            or academic advisor. Regular training and updates ensure effective use of this powerful predictive tool.
+        </p>
+        <div class="action-buttons">
+            <a href="/predict" class="btn btn-primary">Make a Prediction</a>
+            <a href="/batch" class="btn btn-secondary">Batch Upload</a>
+            <a href="/" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </section>
+</div>
+
+<style>
+.about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+}
+
+.about-header h1 {
+    font-size: 2.5em;
+    margin: 0 0 10px 0;
+}
+
+.about-header .subtitle {
+    font-size: 1.2em;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.about-section {
+    margin: 40px 0;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.about-section h2 {
+    color: #333;
+    margin-top: 0;
+    font-size: 1.8em;
+}
+
+.about-section p {
+    color: #555;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+.about-section ul {
+    color: #555;
+    line-height: 1.8;
+}
+
+.about-section ul li {
+    margin: 8px 0;
+}
+
+/* Factors Grid */
+.factors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.factor-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.factor-card h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.factor-card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95em;
+}
+
+/* Features List */
+.features-list {
+    display: grid;
+    gap: 20px;
+}
+
+.feature {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.feature-icon {
+    font-size: 2.5em;
+    min-width: 60px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.feature-content h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.feature-content p {
+    margin: 0;
+    color: #666;
+}
+
+/* Info Table */
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.info-table thead {
+    background: #667eea;
+    color: white;
+}
+
+.info-table th, .info-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-table tbody tr:hover {
+    background: #f5f5f5;
+}
+
+.info-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Usage Steps */
+.usage-steps {
+    display: grid;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.step {
+    display: flex;
+    gap: 20px;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #667eea;
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5em;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.step-content p {
+    margin: 0;
+    color: #666;
+}
+
+/* Model Info */
+.model-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.info-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border-top: 3px solid #667eea;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-box h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.info-box p {
+    margin: 0;
+    color: #666;
+}
+
+/* Warning Section */
+.warning-section {
+    border-left-color: #ff9800;
+    background: #fff3e0;
+}
+
+.warning-section h2 {
+    color: #ff9800;
+}
+
+.warning-section ul {
+    background: white;
+    padding: 20px 20px 20px 40px;
+    border-radius: 5px;
+    border-left: 3px solid #ff9800;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #764ba2;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #65408f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(118, 75, 162, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .about-section {
+        padding: 20px;
+    }
+    
+    .feature {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .info-table {
+        font-size: 0.9em;
+    }
+    
+    .info-table th, .info-table td {
+        padding: 8px 10px;
+    }
+}
+</style>
+{% endblock %}

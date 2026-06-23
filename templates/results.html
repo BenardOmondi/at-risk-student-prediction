@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction Results{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <h1>Prediction Results</h1>
+    
+    <!-- Prediction Status -->
+    <div class="result-card {% if result.prediction == 'At-Risk' %}result-risk{% else %}result-safe{% endif %}">
+        <div class="result-icon">
+            {% if result.prediction == 'At-Risk' %}
+                ⚠️
+            {% else %}
+                ✅
+            {% endif %}
+        </div>
+        <div class="result-content">
+            <h2>{{ result.prediction }}</h2>
+            <p class="result-subtitle">
+                {% if result.prediction == 'At-Risk' %}
+                    This student requires intervention
+                {% else %}
+                    This student is performing well
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    
+    <!-- Probability Scores -->
+    <div class="probability-grid">
+        <div class="prob-card">
+            <h3>Risk Probability</h3>
+            <div class="prob-value risk">{{ "%.1f"|format(result.risk_probability) }}%</div>
+            <div class="prob-bar">
+                <div class="prob-fill risk" style="width: {{ result.risk_probability }}%"></div>
+            </div>
+        </div>
+        
+        <div class="prob-card">
+            <h3>Safe Probability</h3>
+            <div class="prob-value safe">{{ "%.1f"|format(result.safe_probability) }}%</div>
+            <div class="prob-bar">
+                <div class="prob-fill safe" style="width: {{ result.safe_probability }}%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recommendations -->
+    <div class="recommendations">
+        <h2>💡 Recommendations</h2>
+        
+        {% if result.prediction == 'At-Risk' %}
+        <div class="rec-list risk">
+            <h3>Immediate Actions Required:</h3>
+            <ul>
+                <li>📞 Schedule meeting with student and parents</li>
+                <li>📚 Provide tutoring or remedial support</li>
+                <li>👥 Assign mentor or peer tutor</li>
+                <li>📊 Monitor attendance weekly</li>
+                <li>🎯 Create personalized learning plan</li>
+            </ul>
+            
+            <h3>Key Risk Factors:</h3>
+            <ul>
+                {% if student.G2 < 10 %}
+                <li>Low second period grade ({{ student.G2 }}/20)</li>
+                {% endif %}
+                {% if student.G1 < 10 %}
+                <li>Low first period grade ({{ student.G1 }}/20)</li>
+                {% endif %}
+                {% if student.failures > 0 %}
+                <li>{{ student.failures }} past failure(s)</li>
+                {% endif %}
+                {% if student.absences > 10 %}
+                <li>High absences ({{ student.absences }})</li>
+                {% endif %}
+                {% if student.studytime == 1 %}
+                <li>Very low study time (< 2 hours/week)</li>
+                {% endif %}
+                {% if student.internet == 'no' %}
+                <li>No internet access at home</li>
+                {% endif %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="rec-list safe">
+            <h3>Continue Current Support:</h3>
+            <ul>
+                <li>Student is performing well</li>
+                <li>Maintain current support level</li>
+                <li>Monitor for changes</li>
+                <li>Encourage continued good work</li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Actions -->
+    <div class="result-actions">
+        <a href="/predict" class="btn btn-secondary">← Predict Another Student</a>
+        <button onclick="window.print()" class="btn btn-primary">🖨️ Print Report</button>
+    </div>
+</div>
+{% endblock %}

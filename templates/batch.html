@@ -1,0 +1,531 @@
+{% extends "base.html" %}
+
+{% block title %}Batch Upload - Student Risk Prediction{% endblock %}
+
+{% block content %}
+<div class="batch-container">
+    <h1>📤 Batch Student Upload</h1>
+    <p class="subtitle">Upload a CSV file to predict risk levels for multiple students at once</p>
+    
+    {% if error %}
+    <div class="alert alert-error">
+        <strong>Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+    
+    <!-- Instructions -->
+    <div class="instructions-card">
+        <h2>📋 Instructions</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <span class="step-num">1</span>
+                <div class="step-content">
+                    <strong>Download the CSV template</strong>
+                    <p>Use our template to ensure your data is formatted correctly</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-num">2</span>
+                <div class="step-content">
+                    <strong>Fill in student data</strong>
+                    <p>Enter data for all 12 required features for each student</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-num">3</span>
+                <div class="step-content">
+                    <strong>Upload the file</strong>
+                    <p>Select your completed CSV file and click "Process Students"</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <span class="step-num">4</span>
+                <div class="step-content">
+                    <strong>Review results</strong>
+                    <p>View predictions and download results for your records</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Upload Form -->
+    <div class="upload-section">
+        <h2>📂 Upload Your File</h2>
+        
+        <form method="POST" enctype="multipart/form-data" id="uploadForm">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">
+                    <p><strong>Drag and drop your CSV file here</strong></p>
+                    <p>or</p>
+                    <label for="file" class="file-label">
+                        <span class="btn btn-secondary">Browse Files</span>
+                        <input type="file" 
+                               id="file" 
+                               name="file" 
+                               accept=".csv" 
+                               required
+                               style="display: none;">
+                    </label>
+                </div>
+                <div class="upload-hint">
+                    Maximum file size: 5MB | Accepted format: CSV only
+                </div>
+            </div>
+            
+            <div id="fileInfo" class="file-info" style="display: none;">
+                <div class="file-details">
+                    <span class="file-icon">📄</span>
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-size" id="fileSize"></span>
+                    <button type="button" class="remove-file" id="removeFile">✕</button>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+                    <span class="btn-text"> Process Students</span>
+                    <span class="btn-loading" style="display: none;">
+                        <span class="spinner"></span> Processing...
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.batch-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Instructions Card */
+.instructions-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.instructions-card h2 {
+    margin-bottom: 1.5rem;
+    color: var(--gray-900);
+}
+
+.steps {
+    display: grid;
+    gap: 1rem;
+}
+
+.step {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--gray-50);
+    border-radius: 6px;
+}
+
+.step-num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.step-content strong {
+    display: block;
+    color: var(--gray-900);
+    margin-bottom: 0.25rem;
+}
+
+.step-content p {
+    color: var(--gray-700);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Template Section */
+.template-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.template-section h2 {
+    margin-bottom: 1rem;
+    color: var(--gray-900);
+}
+
+.template-section > p {
+    color: var(--gray-700);
+    margin-bottom: 1.5rem;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    display: inline-block;
+}
+
+.template-info {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--gray-50);
+    border-radius: 6px;
+}
+
+.template-info h3 {
+    margin-bottom: 1rem;
+    color: var(--gray-900);
+}
+
+.columns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.column-group h4 {
+    color: var(--primary);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.column-group ul {
+    list-style: none;
+    padding: 0;
+}
+
+.column-group li {
+    margin-bottom: 0.5rem;
+    color: var(--gray-700);
+    font-size: 0.9rem;
+}
+
+.column-group code {
+    background: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    color: var(--primary);
+}
+
+/* Upload Section */
+.upload-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.upload-section h2 {
+    margin-bottom: 1.5rem;
+    color: var(--gray-900);
+}
+
+.upload-area {
+    border: 3px dashed var(--gray-300);
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: var(--primary);
+    background: var(--gray-50);
+}
+
+.upload-area.dragover {
+    border-color: var(--primary);
+    background: #dbeafe;
+}
+
+.upload-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.upload-text p {
+    color: var(--gray-700);
+    margin: 0.5rem 0;
+}
+
+.file-label {
+    cursor: pointer;
+}
+
+.upload-hint {
+    margin-top: 1rem;
+    color: var(--gray-700);
+    font-size: 0.9rem;
+}
+
+.file-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--gray-50);
+    border-radius: 6px;
+}
+
+.file-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file-icon {
+    font-size: 2rem;
+}
+
+.file-name {
+    flex: 1;
+    font-weight: 500;
+    color: var(--gray-900);
+}
+
+.file-size {
+    color: var(--gray-700);
+    font-size: 0.9rem;
+}
+
+.remove-file {
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-file:hover {
+    background: #dc2626;
+}
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Example Section */
+.example-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.example-section h2 {
+    margin-bottom: 1rem;
+    color: var(--gray-900);
+}
+
+.example-table-container {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.example-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.example-table th,
+.example-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid var(--gray-300);
+}
+
+.example-table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.example-table tbody tr:nth-child(even) {
+    background: var(--gray-50);
+}
+
+.example-note {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.example-note code {
+    background: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+}
+
+/* Tips Section */
+.tips-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.tips-section h2 {
+    margin-bottom: 1.5rem;
+    color: var(--gray-900);
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.tip-card {
+    padding: 1.5rem;
+    background: var(--gray-50);
+    border-radius: 6px;
+    text-align: center;
+}
+
+.tip-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.tip-card h3 {
+    font-size: 1.1rem;
+    color: var(--gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.tip-card p {
+    color: var(--gray-700);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .upload-area {
+        padding: 2rem 1rem;
+    }
+    
+    .columns-grid,
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn-large {
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+// File upload handling
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('file');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const removeFile = document.getElementById('removeFile');
+    const uploadForm = document.getElementById('uploadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            showFileInfo(files[0]);
+        }
+    });
+    
+    // File selection
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            showFileInfo(e.target.files[0]);
+        }
+    });
+    
+    // Show file info
+    function showFileInfo(file) {
+        fileName.textContent = file.name;
+        fileSize.textContent = formatFileSize(file.size);
+        uploadArea.style.display = 'none';
+        fileInfo.style.display = 'block';
+    }
+    
+    // Remove file
+    removeFile.addEventListener('click', () => {
+        fileInput.value = '';
+        uploadArea.style.display = 'block';
+        fileInfo.style.display = 'none';
+    });
+    
+    // Format file size
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+    
+    // Form submission
+    uploadForm.addEventListener('submit', function(e) {
+        submitBtn.querySelector('.btn-text').style.display = 'none';
+        submitBtn.querySelector('.btn-loading').style.display = 'inline-flex';
+        submitBtn.disabled = true;
+    });
+});
+</script>
+{% endblock %}
