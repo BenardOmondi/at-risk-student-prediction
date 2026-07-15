@@ -1,5 +1,4 @@
-# EARLY DETECTION OF AT-RISK STUDENTS USING RANDOM FOREST 
-MODEL
+# EARLY DETECTION OF AT-RISK STUDENTS USING RANDOM FOREST MODEL
 
 ## Overview
 This project is an end-to-end predictive analytics system designed to identify students at risk of academic underperformance. By 
